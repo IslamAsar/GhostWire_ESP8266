@@ -141,12 +141,13 @@ platformio.ini
 README.md
 src/
   main.cpp
-  ghost_crypto.cpp
 lib/
   AES-128 CBC/
-    ghost_crypto.h
+      ghost_crypto.cpp
+      ghost_crypto.h
   Diffie-Hellman Handshake/
-    ghost_handshake.h
+      ghost_handshake.cpp
+      ghost_handshake.h
 ``` 
 
 ## Notes
