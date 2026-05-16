@@ -133,12 +133,9 @@ void processDecrypt(ESP8266WebServer& server, std::array<uint8_t, 16>& userSessi
   addCORS(server);
   if (!readyFlag) { server.send(401, "application/json", "{\"error\":\"Handshake first\"}"); return; }
 
-  Serial.printf("\n--- %s DECRYPTION START ---\n", userName);
   digitalWrite(LED_DECRYPT, HIGH);
 
   String payload = server.arg("plain");
-  Serial.print("          Payload Length: ");
-  Serial.println(payload.length());
 
   JsonDocument incoming;
   DeserializationError err = deserializeJson(incoming, payload);
@@ -150,7 +147,7 @@ void processDecrypt(ESP8266WebServer& server, std::array<uint8_t, 16>& userSessi
     return;
   }
 
-  if (!incoming.containsKey("cipher")) { 
+  if (incoming["cipher"].isNull()) { 
     server.send(400, "application/json", "{\"error\":\"Missing cipher\"}"); 
     digitalWrite(LED_DECRYPT, LOW); 
     return; 
